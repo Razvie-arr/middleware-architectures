@@ -6,12 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class TransformationController {
-    @GetMapping("test/{message}")
-    String testGet(@PathVariable String message) {
-        return "Your message is: " + message;
-    }
-
-    @PostMapping(value="/transformation", consumes = "text/plain")
+    @PostMapping(value="/transformation", consumes = "text/plain", produces = "application/json")
     SubmitDTO transformMessage(@RequestBody String message) {
         Transformation transformation = new Transformation(message);
         transformation.transform();

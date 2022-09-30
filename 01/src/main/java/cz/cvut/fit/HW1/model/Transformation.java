@@ -3,8 +3,6 @@ package cz.cvut.fit.HW1.model;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-record Person(String name, String surname) {}
-
 public class Transformation {
     private SubmitDTO submit;
     private final String pureMessage;
