@@ -1,0 +1,39 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bns="https://courses.fit.cvut.cz/NI-AM1/tutorials/web-services/"
+           targetNamespace="https://courses.fit.cvut.cz/NI-AM1/tutorials/web-services/" elementFormDefault="qualified">
+
+    <xs:element name="getBookingsRequest">
+        <xs:complexType>
+            <xs:sequence/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getBookingsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="booking" type="bns:booking"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="booking">
+        <xs:sequence>
+            <xs:element name="passengerInformation" type="bns:passengerInformation" />
+            <xs:element name="departure" type="bns:flightData"/>
+            <xs:element name="arrival" type="bns:flightData"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="passengerInformation">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="lastName" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="flightData">
+        <xs:sequence>
+            <xs:element name="dateTime" type="xs:dateTime"/>
+            <xs:element name="location" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
