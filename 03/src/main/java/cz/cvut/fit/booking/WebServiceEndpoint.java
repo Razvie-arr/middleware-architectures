@@ -20,4 +20,11 @@ public class WebServiceEndpoint {
         response.getBooking().addAll(repository.getBookings());
         return response;
     }
+
+    @PayloadRoot(namespace = "https://courses.fit.cvut.cz/NI-AM1/tutorials/web-services/", localPart = "addBookingRequest")
+    @ResponsePayload
+    public AddBookingResponse addBooking(@RequestPayload AddBookingRequest request) {
+        repository.addBooking(request.getBooking());
+        return new AddBookingResponse();
+    }
 }

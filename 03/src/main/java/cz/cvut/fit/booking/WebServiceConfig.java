@@ -35,7 +35,7 @@ public class WebServiceConfig extends WsConfigurerAdapter {
     }
 
     @Bean
-    public XsdSchema toursSchema() {
+    public XsdSchema bookingsSchema() {
         return new SimpleXsdSchema(new ClassPathResource("bookings.xsd"));
     }
 }

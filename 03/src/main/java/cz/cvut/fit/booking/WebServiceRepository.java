@@ -58,4 +58,6 @@ public class WebServiceRepository {
     public List<Booking> getBookings(){
         return bookings;
     }
+
+    public void addBooking(Booking booking) { bookings.add(booking); }
 }
