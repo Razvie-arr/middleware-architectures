@@ -27,4 +27,11 @@ public class WebServiceEndpoint {
         repository.addBooking(request.getBooking());
         return new AddBookingResponse();
     }
+
+    @PayloadRoot(namespace = "https://courses.fit.cvut.cz/NI-AM1/tutorials/web-services/", localPart = "deleteBookingRequest")
+    @ResponsePayload
+    public DeleteBookingResponse deleteBooking(@RequestPayload DeleteBookingRequest request) {
+        repository.deleteBooking(request.getId());
+        return new DeleteBookingResponse();
+    }
 }

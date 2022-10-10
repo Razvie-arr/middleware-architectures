@@ -14,6 +14,7 @@ import java.util.List;
 public class WebServiceRepository {
 
     private static final List<Booking> bookings = new ArrayList<>();
+    private int id;
 
     @PostConstruct
     public void initRepo() throws DatatypeConfigurationException {
@@ -51,13 +52,19 @@ public class WebServiceRepository {
         b2.setPassengerInformation(passengerInformation2);
 
 
-        bookings.add(b1);
-        bookings.add(b2);
+        addBooking(b1);
+        addBooking(b2);
     }
 
     public List<Booking> getBookings(){
         return bookings;
     }
 
-    public void addBooking(Booking booking) { bookings.add(booking); }
+    public void addBooking(Booking booking) {
+        booking.setId(id);
+        bookings.add(booking);
+        id++;
+    }
+
+    public void deleteBooking(int bookingId) { bookings.remove(bookingId);}
 }
