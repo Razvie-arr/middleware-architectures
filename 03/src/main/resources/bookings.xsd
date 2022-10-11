@@ -1,26 +1,36 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bns="https://courses.fit.cvut.cz/NI-AM1/tutorials/web-services/"
            targetNamespace="https://courses.fit.cvut.cz/NI-AM1/tutorials/web-services/" elementFormDefault="qualified">
     <xs:complexType name="booking">
-        <xs:sequence>
+        <xs:all>
             <xs:element name="id" type="xs:int" />
             <xs:element name="passengerInformation" type="bns:passengerInformation" />
             <xs:element name="departure" type="bns:flightData"/>
             <xs:element name="arrival" type="bns:flightData"/>
-        </xs:sequence>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:complexType name="bookingUpdateDTO">
+<!--        minOccurs 0 for not required fields -->
+        <xs:all>
+            <xs:element name="id" type="xs:int" />
+            <xs:element minOccurs="0" name="passengerInformation" type="bns:passengerInformation" />
+            <xs:element minOccurs="0" name="departure" type="bns:flightData"/>
+            <xs:element minOccurs="0" name="arrival" type="bns:flightData"/>
+        </xs:all>
     </xs:complexType>
 
     <xs:complexType name="passengerInformation">
-        <xs:sequence>
+        <xs:all>
             <xs:element name="name" type="xs:string"/>
             <xs:element name="lastName" type="xs:string"/>
-        </xs:sequence>
+        </xs:all>
     </xs:complexType>
 
     <xs:complexType name="flightData">
-        <xs:sequence>
+        <xs:all>
             <xs:element name="dateTime" type="xs:dateTime"/>
             <xs:element name="location" type="xs:string"/>
-        </xs:sequence>
+        </xs:all>
     </xs:complexType>
 
 
@@ -61,6 +71,20 @@
     </xs:element>
 
     <xs:element name="deleteBookingResponse">
+        <xs:complexType>
+            <xs:sequence/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="updateBookingRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="bookingUpdateDTO" type="bns:bookingUpdateDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="updateBookingResponse">
         <xs:complexType>
             <xs:sequence/>
         </xs:complexType>

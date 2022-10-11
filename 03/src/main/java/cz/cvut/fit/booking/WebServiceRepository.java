@@ -67,4 +67,28 @@ public class WebServiceRepository {
     }
 
     public void deleteBooking(int bookingId) { bookings.removeIf(b -> b.getId() == bookingId); }
+
+    public void updateBooking(BookingUpdateDTO bookingUpdateDTO) {
+        Booking booking = findBookingById(bookingUpdateDTO.getId());
+        if (booking != null) {
+            if (bookingUpdateDTO.getPassengerInformation() != null) {
+                booking.setPassengerInformation(bookingUpdateDTO.getPassengerInformation());
+            }
+            if (bookingUpdateDTO.getDeparture() != null) {
+                booking.setDeparture(bookingUpdateDTO.getDeparture());
+            }
+            if (bookingUpdateDTO.getArrival() != null) {
+                booking.setArrival(bookingUpdateDTO.getArrival());
+            }
+        }
+    }
+
+    public Booking findBookingById(int id) {
+        for (Booking booking : bookings) {
+            if (booking.getId() == id) {
+                return booking;
+            }
+        }
+        return null;
+    }
 }
