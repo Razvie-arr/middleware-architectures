@@ -66,5 +66,5 @@ public class WebServiceRepository {
         id++;
     }
 
-    public void deleteBooking(int bookingId) { bookings.remove(bookingId);}
+    public void deleteBooking(int bookingId) { bookings.removeIf(b -> b.getId() == bookingId); }
 }
