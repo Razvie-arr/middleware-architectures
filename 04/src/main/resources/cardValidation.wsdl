@@ -1,0 +1,50 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="https://courses.fit.cvut.cz/NI-AM1/hw/web-services/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="https://courses.fit.cvut.cz/NI-AM1/hw/web-services/" targetNamespace="https://courses.fit.cvut.cz/NI-AM1/hw/web-services/">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="https://courses.fit.cvut.cz/NI-AM1/hw/web-services/">
+            <xs:element name="validateCardRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="cardNumber" type="xs:string"/>
+                        <xs:element name="cardOwner" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="validateCardResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="result" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="validateCardResponse">
+        <wsdl:part element="tns:validateCardResponse" name="validateCardResponse"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="validateCardRequest">
+        <wsdl:part element="tns:validateCardRequest" name="validateCardRequest"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="CardPort">
+        <wsdl:operation name="validateCard">
+            <wsdl:input message="tns:validateCardRequest" name="validateCardRequest"> </wsdl:input>
+            <wsdl:output message="tns:validateCardResponse" name="validateCardResponse"> </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="CardPortSoap11" type="tns:CardPort">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="validateCard">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="validateCardRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="validateCardResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="CardPortService">
+        <wsdl:port binding="tns:CardPortSoap11" name="CardPortSoap11">
+            <soap:address location="http://147.32.233.18:8888/NI-AM1-CardValidation/ws"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
