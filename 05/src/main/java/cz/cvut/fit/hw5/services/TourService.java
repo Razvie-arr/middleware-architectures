@@ -1,5 +1,6 @@
 package cz.cvut.fit.hw5.services;
 
+import cz.cvut.fit.hw5.dto.Customer;
 import cz.cvut.fit.hw5.dto.Tour;
 import org.springframework.stereotype.Service;
 
@@ -20,5 +21,17 @@ public class TourService {
 
     public void deleteTour(String id) {
         tours.removeIf(c -> c.getId().equals(id));
+    }
+
+    public List<Tour> getTours() { return tours; }
+
+    public boolean updateTour(Tour newTour) {
+        for (int i = 0; i < tours.size(); i++) {
+            if (tours.get(i).getId().equals(newTour.getId())) {
+                tours.set(i, newTour);
+                return true;
+            }
+        }
+        return false;
     }
 }
