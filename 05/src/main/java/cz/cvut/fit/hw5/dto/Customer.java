@@ -1,8 +1,10 @@
 package cz.cvut.fit.hw5.dto;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import java.util.List;
 
-public class Customer {
+public class Customer extends RepresentationModel<Customer> {
     private String id;
     private String name;
     private List<Tour> tours;

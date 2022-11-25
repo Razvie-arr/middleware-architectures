@@ -51,7 +51,7 @@ public class LocationController {
     @Operation(summary = "Add new location")
     @ApiResponse(responseCode = "201", description = "New location added")
     @PostMapping(value = "/")
-    public ResponseEntity<Country> createLocation(@RequestBody Location location) {
+    public ResponseEntity<Location> createLocation(@RequestBody Location location) {
         locationService.addLocation(location);
         return ResponseEntity.status(HttpStatus.CREATED).header("Location", "/location/" + location.getId()).build();
     }
@@ -82,7 +82,7 @@ public class LocationController {
             @ApiResponse(responseCode = "200", description = "Updated the location",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = Location.class))}),
-            @ApiResponse(responseCode = "404", description = "Invalid country",
+            @ApiResponse(responseCode = "404", description = "Invalid location",
                     content = @Content)})
     @PutMapping("/")
     public ResponseEntity<?> updateLocation(@RequestBody Location location) {

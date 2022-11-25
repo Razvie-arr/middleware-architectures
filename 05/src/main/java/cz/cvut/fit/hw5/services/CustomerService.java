@@ -17,4 +17,16 @@ public class CustomerService {
     public void addCustomer(Customer customer) {
         customers.add(customer);
     }
+
+    public List<Customer> getCustomers() { return customers; }
+
+    public boolean updateCustomer(Customer newCustomer) {
+        for (int i = 0; i < customers.size(); i++) {
+            if (customers.get(i).getId().equals(newCustomer.getId())) {
+                customers.set(i, newCustomer);
+                return true;
+            }
+        }
+        return false;
+    }
 }
