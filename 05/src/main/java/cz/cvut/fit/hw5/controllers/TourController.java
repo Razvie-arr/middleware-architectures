@@ -32,7 +32,7 @@ public class TourController {
 
         for (Tour tour : tours) {
             tour.removeLinks();
-            tour.add(linkTo(CustomerController.class).slash(tour.getId()).withRel("DETAIL"));
+            tour.add(linkTo(TourController.class).slash(tour.getId()).withRel("DETAIL"));
         }
         CollectionModel<Tour> result = CollectionModel.of(tours);
         result.add(linkTo(TourController.class).withRel("ADD"));
