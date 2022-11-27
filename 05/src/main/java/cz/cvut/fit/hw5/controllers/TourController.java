@@ -79,9 +79,22 @@ public class TourController {
     public ResponseEntity<?> updateTour(@RequestBody Tour tour) {
         if (tourService.updateTour(tour)) {
             return ResponseEntity.status(HttpStatus.OK).body(tour);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found");
         }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found");
+    }
+
+    @Operation(summary = "Delete tour")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Deleted the tour",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", description = "Invalid tour",
+                    content = @Content)})
+    @DeleteMapping("/{id}")
+    public HttpStatus deleteTour(@PathVariable String id) {
+        if (tourService.deleteTour(id)) {
+            return HttpStatus.OK;
+        }
+        return HttpStatus.NOT_FOUND;
     }
 }
 

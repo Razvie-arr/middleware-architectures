@@ -19,8 +19,8 @@ public class TourService {
         tours.add(tour);
     }
 
-    public void deleteTour(String id) {
-        tours.removeIf(c -> c.getId().equals(id));
+    public boolean deleteTour(String id) {
+        return tours.removeIf(c -> c.getId().equals(id));
     }
 
     public List<Tour> getTours() { return tours; }

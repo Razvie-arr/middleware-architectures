@@ -81,4 +81,18 @@ public class CountryController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found");
         }
     }
+
+    @Operation(summary = "Delete country")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Deleted the country",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", description = "Invalid country",
+                    content = @Content)})
+    @DeleteMapping("/{id}")
+    public HttpStatus deleteCountry(@PathVariable String id) {
+        if (countryService.deleteCountry(id)) {
+            return HttpStatus.OK;
+        }
+        return HttpStatus.NOT_FOUND;
+    }
 }

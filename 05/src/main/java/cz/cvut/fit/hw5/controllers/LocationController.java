@@ -29,8 +29,8 @@ public class LocationController {
     @Operation(summary = "Get all locations")
     @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json"))
     @GetMapping("/")
-    public CollectionModel<Location> getLocations(@RequestParam String countryId) {
-        List<Location> locations = new ArrayList<>();
+    public CollectionModel<Location> getLocations(@RequestParam(required = false) String countryId) {
+        List<Location> locations;
 
         if (countryId != null) {
             locations = locationService.getLocationsInCountry(countryId);
@@ -91,5 +91,19 @@ public class LocationController {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found");
         }
+    }
+
+    @Operation(summary = "Delete location")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Deleted the location",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", description = "Invalid location",
+                    content = @Content)})
+    @DeleteMapping("/{id}")
+    public HttpStatus deleteLocation(@PathVariable String id) {
+        if (locationService.deleteLocation(id)) {
+            return HttpStatus.OK;
+        }
+        return HttpStatus.NOT_FOUND;
     }
 }

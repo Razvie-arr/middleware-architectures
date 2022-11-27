@@ -31,4 +31,8 @@ public class CountryService {
         }
         return false;
     }
+
+    public boolean deleteCountry(String id) {
+        return countries.removeIf(c -> c.getId().equals(id));
+    }
 }

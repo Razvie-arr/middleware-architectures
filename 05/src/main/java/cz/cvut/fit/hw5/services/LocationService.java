@@ -39,4 +39,8 @@ public class LocationService {
                 .filter(location -> location.getCountry().getId().equals(countryId))
                 .collect(Collectors.toList());
     }
+
+    public boolean deleteLocation(String id) {
+        return locations.removeIf(c -> c.getId().equals(id));
+    }
 }

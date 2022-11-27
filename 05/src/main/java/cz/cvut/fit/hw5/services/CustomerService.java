@@ -29,4 +29,8 @@ public class CustomerService {
         }
         return false;
     }
+
+    public boolean deleteCustomer(String id) {
+        return customers.removeIf(c -> c.getId().equals(id));
+    }
 }
