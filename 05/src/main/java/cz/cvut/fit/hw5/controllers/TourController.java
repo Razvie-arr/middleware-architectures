@@ -1,8 +1,6 @@
 package cz.cvut.fit.hw5.controllers;
 
-import cz.cvut.fit.hw5.dto.Customer;
 import cz.cvut.fit.hw5.dto.Tour;
-import cz.cvut.fit.hw5.services.CustomerService;
 import cz.cvut.fit.hw5.services.TourService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -86,3 +84,4 @@ public class TourController {
         }
     }
 }
+
