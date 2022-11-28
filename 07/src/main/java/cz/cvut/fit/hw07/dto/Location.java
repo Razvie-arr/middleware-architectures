@@ -2,7 +2,7 @@ package cz.cvut.fit.hw07.dto;
 
 import org.springframework.hateoas.RepresentationModel;
 
-public class Location extends RepresentationModel<Location> {
+public class Location {
 
     String id;
     String name;

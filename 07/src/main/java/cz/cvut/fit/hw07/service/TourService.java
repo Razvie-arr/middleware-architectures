@@ -1,10 +1,6 @@
 package cz.cvut.fit.hw07.service;
 
-import cz.cvut.fit.hw07.dto.Confirmation;
-import cz.cvut.fit.hw07.dto.Operation;
-import cz.cvut.fit.hw07.dto.Status;
 import cz.cvut.fit.hw07.dto.Tour;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

@@ -2,7 +2,7 @@ package cz.cvut.fit.hw07.dto;
 
 import org.springframework.hateoas.RepresentationModel;
 
-public class Country extends RepresentationModel<Country> {
+public class Country {
 
     String id;
     String name;

@@ -1,8 +1,6 @@
 package cz.cvut.fit.hw07.dto;
 
-import org.springframework.hateoas.RepresentationModel;
-
-public class Tour extends RepresentationModel<Tour> {
+public class Tour {
 
     private String id;
     private String name;

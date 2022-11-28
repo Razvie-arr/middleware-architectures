@@ -4,7 +4,7 @@ import org.springframework.hateoas.RepresentationModel;
 
 import java.util.List;
 
-public class Customer extends RepresentationModel<Customer> {
+public class Customer {
     private String id;
     private String name;
     private List<Tour> tours;
