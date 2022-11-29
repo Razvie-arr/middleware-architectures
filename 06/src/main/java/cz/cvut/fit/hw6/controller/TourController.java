@@ -2,7 +2,6 @@ package cz.cvut.fit.hw6.controller;
 
 import cz.cvut.fit.hw6.dto.Status;
 import cz.cvut.fit.hw6.dto.Tour;
-import cz.cvut.fit.hw6.service.ConfirmationService;
 import cz.cvut.fit.hw6.service.TourService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -86,7 +85,7 @@ public class TourController {
         }
     }
 
-    @Operation(summary = "Delete tour, you need to confirm by confirmation/tourId within one minute")
+    @Operation(summary = "Delete tour")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Deleted the tour",
                     content = {@Content(mediaType = "application/json")}),
@@ -95,18 +94,26 @@ public class TourController {
             @ApiResponse(responseCode = "408", description = "Confirmation timeout",
                     content = @Content)})
     @DeleteMapping("/{id}")
-    public HttpStatus deleteTour(@PathVariable String id) throws InterruptedException {
+    public ResponseEntity<HttpStatus> deleteTour(@PathVariable String id) throws InterruptedException {
         if (tourService.getTourById(id) != null) {
-            tourService.addTourConfirmation(id, cz.cvut.fit.hw6.dto.Operation.DELETE);
-            Thread.sleep(60000);
-
-            if (tourService.getTourConfirmationStatus(id, cz.cvut.fit.hw6.dto.Operation.DELETE) == Status.CONFIRMED) {
-                tourService.deleteTour(id);
-                return HttpStatus.OK;
-            }
-            return HttpStatus.REQUEST_TIMEOUT;
+            tourService.asyncDeleteTour(id);
+            return ResponseEntity
+                    .status(HttpStatus.ACCEPTED)
+                    .header("Location", linkTo(TourController.class) + "/deleteStatus/" + id)
+                    .build();
         }
-        return HttpStatus.NOT_FOUND;
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+    @GetMapping("/deleteStatus/{id}")
+    public ResponseEntity<Status> getDeleteStatus(@PathVariable String id) {
+        if (tourService.getDeleteStatusById(id) != null) {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(tourService.getDeleteStatusById(id));
+        }
+
+        return ResponseEntity.notFound().build();
     }
 }
 

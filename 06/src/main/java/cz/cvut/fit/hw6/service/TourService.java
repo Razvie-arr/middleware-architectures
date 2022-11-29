@@ -1,19 +1,18 @@
 package cz.cvut.fit.hw6.service;
 
-import cz.cvut.fit.hw6.dto.Confirmation;
-import cz.cvut.fit.hw6.dto.Operation;
 import cz.cvut.fit.hw6.dto.Status;
 import cz.cvut.fit.hw6.dto.Tour;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TourService {
-    @Autowired
-    ConfirmationService confirmationService;
+    Map<String, Status> deleteStatuses = new HashMap<>();
 
     private final List<Tour> tours = new ArrayList<>();
 
@@ -25,8 +24,18 @@ public class TourService {
         tours.add(tour);
     }
 
-    public boolean deleteTour(String id) {
-        return tours.removeIf(c -> c.getId().equals(id));
+    @Async
+    public void asyncDeleteTour(String id) throws InterruptedException {
+        deleteStatuses.put(id, Status.IN_PROGRESS);
+
+        //simulate long operation, 30 sec delay
+        Thread.sleep(30 * 1000);
+        if (tours.removeIf(c -> c.getId().equals(id))) {
+            System.out.println("async success");
+            deleteStatuses.put(id, Status.SUCCESS);
+        } else {
+            deleteStatuses.put(id, Status.FAILED);
+        }
     }
 
     public List<Tour> getTours() { return tours; }
@@ -41,14 +50,7 @@ public class TourService {
         return false;
     }
 
-    public void addTourConfirmation(String id, Operation operation) {
-        confirmationService.addConfirmation(new Confirmation(id, operation));
-    }
-
-    public Status getTourConfirmationStatus(String id, Operation operation) {
-        if (confirmationService.getConfirmationById(id).operation() == operation) {
-            return confirmationService.getConfirmationStatusById(id);
-        }
-        return null;
+    public Status getDeleteStatusById(String id) {
+        return deleteStatuses.get(id);
     }
 }
