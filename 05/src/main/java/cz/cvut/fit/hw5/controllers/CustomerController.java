@@ -1,5 +1,6 @@
 package cz.cvut.fit.hw5.controllers;
 
+import cz.cvut.fit.hw5.dto.Country;
 import cz.cvut.fit.hw5.dto.Customer;
 import cz.cvut.fit.hw5.services.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -76,13 +77,13 @@ public class CustomerController {
                             schema = @Schema(implementation = Customer.class))}),
             @ApiResponse(responseCode = "404", description = "Invalid customer",
                     content = @Content)})
-    @PutMapping("/")
-    public ResponseEntity<?> updateCustomer(@RequestBody Customer customer) {
-        if (customerService.updateCustomer(customer)) {
-            return ResponseEntity.status(HttpStatus.OK).body(customer);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found");
+    @PutMapping("/{id}")
+    public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer, @RequestParam String id) {
+        Customer updatedCustomer = customerService.updateCustomer(id, customer);
+        if (updatedCustomer != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(updatedCustomer);
         }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     @Operation(summary = "Delete customer")

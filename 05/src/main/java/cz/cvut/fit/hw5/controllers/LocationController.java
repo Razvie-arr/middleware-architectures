@@ -84,13 +84,13 @@ public class LocationController {
                             schema = @Schema(implementation = Location.class))}),
             @ApiResponse(responseCode = "404", description = "Invalid location",
                     content = @Content)})
-    @PutMapping("/")
-    public ResponseEntity<?> updateLocation(@RequestBody Location location) {
-        if (locationService.updateLocation(location)) {
-            return ResponseEntity.status(HttpStatus.OK).body(location);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found");
+    @PutMapping("/{id}")
+    public ResponseEntity<Location> updateLocation(@RequestBody Location location, @PathVariable String id) {
+        Location updatedLocation = locationService.updateLocation(id, location);
+        if (updatedLocation != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(updatedLocation);
         }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     @Operation(summary = "Delete location")

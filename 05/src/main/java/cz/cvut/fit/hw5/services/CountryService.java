@@ -22,14 +22,14 @@ public class CountryService {
         countries.add(country);
     }
 
-    public boolean updateCountry(Country newCountry) {
+    public Country updateCountry(String id, Country newCountry) {
         for (int i = 0; i < countries.size(); i++) {
-            if (countries.get(i).getId().equals(newCountry.getId())) {
+            if (countries.get(i).getId().equals(id)) {
                 countries.set(i, newCountry);
-                return true;
+                return countries.get(i);
             }
         }
-        return false;
+        return null;
     }
 
     public boolean deleteCountry(String id) {

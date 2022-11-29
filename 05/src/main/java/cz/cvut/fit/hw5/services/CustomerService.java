@@ -20,14 +20,14 @@ public class CustomerService {
 
     public List<Customer> getCustomers() { return customers; }
 
-    public boolean updateCustomer(Customer newCustomer) {
+    public Customer updateCustomer(String id, Customer newCustomer) {
         for (int i = 0; i < customers.size(); i++) {
-            if (customers.get(i).getId().equals(newCustomer.getId())) {
+            if (customers.get(i).getId().equals(id)) {
                 customers.set(i, newCustomer);
-                return true;
+                return customers.get(i);
             }
         }
-        return false;
+        return null;
     }
 
     public boolean deleteCustomer(String id) {

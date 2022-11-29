@@ -1,6 +1,7 @@
 package cz.cvut.fit.hw5.controllers;
 
 import cz.cvut.fit.hw5.dto.Country;
+import cz.cvut.fit.hw5.dto.Location;
 import cz.cvut.fit.hw5.services.CountryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -73,13 +74,13 @@ public class CountryController {
                             schema = @Schema(implementation = Country.class)) }),
             @ApiResponse(responseCode = "404", description = "Invalid country",
                     content = @Content) })
-    @PutMapping("/")
-    public ResponseEntity<?> updateLocation(@RequestBody Country country) {
-        if (countryService.updateCountry(country)) {
-            return ResponseEntity.status(HttpStatus.OK).body(country);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found");
+    @PutMapping("/{id}")
+    public ResponseEntity<Country> updateCountry(@RequestBody Country country, @RequestParam String id) {
+        Country updatedCountry = countryService.updateCountry(id, country);
+        if (updatedCountry != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(updatedCountry);
         }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     @Operation(summary = "Delete country")

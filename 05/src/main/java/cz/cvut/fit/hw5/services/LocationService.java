@@ -1,6 +1,5 @@
 package cz.cvut.fit.hw5.services;
 
-import cz.cvut.fit.hw5.dto.Country;
 import cz.cvut.fit.hw5.dto.Location;
 import org.springframework.stereotype.Service;
 
@@ -24,14 +23,14 @@ public class LocationService {
         locations.add(location);
     }
 
-    public boolean updateLocation(Location newLocation) {
+    public Location updateLocation(String id, Location newLocation) {
         for (int i = 0; i < locations.size(); i++) {
-            if (locations.get(i).getId().equals(newLocation.getId())) {
+            if (locations.get(i).getId().equals(id)) {
                 locations.set(i, newLocation);
-                return true;
+                return locations.get(i);
             }
         }
-        return false;
+        return null;
     }
 
     public List<Location> getLocationsInCountry(String countryId) {

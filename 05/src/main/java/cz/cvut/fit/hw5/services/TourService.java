@@ -1,6 +1,5 @@
 package cz.cvut.fit.hw5.services;
 
-import cz.cvut.fit.hw5.dto.Customer;
 import cz.cvut.fit.hw5.dto.Tour;
 import org.springframework.stereotype.Service;
 
@@ -25,13 +24,13 @@ public class TourService {
 
     public List<Tour> getTours() { return tours; }
 
-    public boolean updateTour(Tour newTour) {
+    public Tour updateTour(String id, Tour newTour) {
         for (int i = 0; i < tours.size(); i++) {
-            if (tours.get(i).getId().equals(newTour.getId())) {
+            if (tours.get(i).getId().equals(id)) {
                 tours.set(i, newTour);
-                return true;
+                return tours.get(i);
             }
         }
-        return false;
+        return null;
     }
 }

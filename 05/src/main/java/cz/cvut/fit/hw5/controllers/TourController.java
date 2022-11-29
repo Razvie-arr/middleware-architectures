@@ -1,5 +1,6 @@
 package cz.cvut.fit.hw5.controllers;
 
+import cz.cvut.fit.hw5.dto.Country;
 import cz.cvut.fit.hw5.dto.Tour;
 import cz.cvut.fit.hw5.services.TourService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -75,12 +76,13 @@ public class TourController {
                             schema = @Schema(implementation = Tour.class))}),
             @ApiResponse(responseCode = "404", description = "Invalid tour",
                     content = @Content)})
-    @PutMapping("/")
-    public ResponseEntity<?> updateTour(@RequestBody Tour tour) {
-        if (tourService.updateTour(tour)) {
-            return ResponseEntity.status(HttpStatus.OK).body(tour);
+    @PutMapping("/{id}")
+    public ResponseEntity<Tour> updateTour(@RequestBody Tour tour, @RequestParam String id) {
+        Tour updatedTour = tourService.updateTour(id, tour);
+        if (updatedTour != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(updatedTour);
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     @Operation(summary = "Delete tour")
