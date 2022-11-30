@@ -1,12 +1,7 @@
 package cz.cvut.fit.hw07;
 
-import cz.cvut.fit.hw07.dto.Country;
 import cz.cvut.fit.hw07.dto.Customer;
-import cz.cvut.fit.hw07.dto.Location;
 import cz.cvut.fit.hw07.dto.Tour;
-import cz.cvut.fit.hw07.service.CountryService;
-import cz.cvut.fit.hw07.service.CustomerService;
-import cz.cvut.fit.hw07.service.LocationService;
 import cz.cvut.fit.hw07.service.TourService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,31 +13,21 @@ import java.util.List;
 @Component
 public class RestApplicationRepository {
     @Autowired
-    CountryService countryService;
-    @Autowired
-    LocationService locationService;
-    @Autowired
     TourService tourService;
-    @Autowired
-    CustomerService customerService;
-
 
     @PostConstruct
     public void initRepo() {
-        countryService.addCountry(new Country("cz", "Czech Republic"));
-        countryService.addCountry(new Country("de", "Deutschland"));
-        locationService.addLocation(new Location("prg", "Prague", countryService.getCountryById("cz")));
-        locationService.addLocation(new Location("brn", "Brno", countryService.getCountryById("cz")));
-        locationService.addLocation(new Location("ck", "Cesky Krumlov", countryService.getCountryById("cz")));
-        locationService.addLocation(new Location("brl", "Berlin", countryService.getCountryById("de")));
-        tourService.addTour(new Tour("wntr", "Beautiful Winter Prague", locationService.getLocationById("prg")));
-        tourService.addTour(new Tour("cstl", "Castles in Cesky Krumlov", locationService.getLocationById("ck")));
-        tourService.addTour(new Tour("und", "Underground culture in Berlin", locationService.getLocationById("brl")));
-
-        List<Tour> vladTours = new ArrayList<>();
-        vladTours.add(tourService.getTourById("wntr"));
-        vladTours.add(tourService.getTourById("cstl"));
-        vladTours.add(tourService.getTourById("und"));
-        customerService.addCustomer(new Customer("vb", "Vlad", vladTours));
+        List<Customer> customers1 = new ArrayList<>();
+        List<Customer> customers2 = new ArrayList<>();
+        customers1.add(new Customer(1, "Vlad"));
+        customers1.add(new Customer(2, "Nafanya"));
+        customers1.add(new Customer(3, "Kuzya"));
+        customers2.add(new Customer(1, "Vlk"));
+        customers2.add(new Customer(1, "Prasatko 1"));
+        customers2.add(new Customer(1, "Prasatko 2"));
+        customers2.add(new Customer(1, "Prasatko 3"));
+        tourService.addTour(new Tour(1, "Tour to Baba Jaga", customers1));
+        tourService.addTour(new Tour(2, "Odstrelime strechu", customers2));
+        tourService.updateLastModified();
     }
 }

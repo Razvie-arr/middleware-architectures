@@ -2,24 +2,23 @@ package cz.cvut.fit.hw07.dto;
 
 import org.springframework.hateoas.RepresentationModel;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Customer {
-    private String id;
+public class Customer implements Serializable {
+    private int id;
     private String name;
-    private List<Tour> tours;
 
-    public Customer(String id, String name, List<Tour> tours) {
+    public Customer(int id, String name) {
         this.id = id;
         this.name = name;
-        this.tours = tours;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -29,13 +28,5 @@ public class Customer {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<Tour> getTours() {
-        return tours;
-    }
-
-    public void setTours(List<Tour> tours) {
-        this.tours = tours;
     }
 }

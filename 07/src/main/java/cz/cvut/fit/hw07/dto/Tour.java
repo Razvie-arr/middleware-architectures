@@ -1,23 +1,24 @@
 package cz.cvut.fit.hw07.dto;
 
+import java.util.List;
+
 public class Tour {
-
-    private String id;
+    private int id;
     private String name;
-    private Location location;
+    private List<Customer> customers;
 
 
-    public Tour(String id, String name, Location location) {
+    public Tour(int id, String name, List<Customer> customers) {
         this.id = id;
         this.name = name;
-        this.location = location;
+        this.customers = customers;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -29,7 +30,11 @@ public class Tour {
         this.name = name;
     }
 
-    public Location getLocation() {return location;}
+    public List<Customer> getCustomers() {
+        return customers;
+    }
 
-    public void setLocation(Location location) {this.location = location; }
+    public void setCustomers(List<Customer> customers) {
+        this.customers = customers;
+    }
 }
