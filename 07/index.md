@@ -9,3 +9,6 @@
 ![img.png](results/3.png)
 
 <h5>Same for strong eTag</h5>
+
+5. Also we can use If-Modified-Since. Got 304 using /tour/modified
+![](results/4.png)

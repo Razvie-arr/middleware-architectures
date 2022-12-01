@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -71,6 +75,30 @@ public class TourController {
                     .lastModified(tourService.getLastModified())
                     .body(tourService.getTours());
         }
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Got list of tours",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Tour.class))) }),
+            @ApiResponse(responseCode = "304", description = "Not modified",
+                    content = @Content) })
+    @GetMapping("/modified")
+    public ResponseEntity<List<Tour>> getToursWithModifiedSince(@RequestHeader(required = false, value = "If-Modified-Since") String ifModifiedSince) throws ParseException {
+        if (ifModifiedSince != null) {
+            long ifModifiedSinceLong = tourService.convertDateStringToMillis(ifModifiedSince);
+            if (ifModifiedSinceLong == tourService.getLastModified()) {
+                return ResponseEntity
+                        .status(HttpStatus.NOT_MODIFIED)
+                        .lastModified(tourService.getLastModified())
+                        .build();
+            }
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .lastModified(tourService.getLastModified())
+                .body(tourService.getTours());
     }
 
     @PostMapping("/")

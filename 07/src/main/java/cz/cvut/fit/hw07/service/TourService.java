@@ -10,8 +10,14 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 @Service
 public class TourService {
@@ -24,7 +30,9 @@ public class TourService {
         updateLastModified();
     }
 
-    public List<Tour> getTours() { return tours; }
+    public List<Tour> getTours() {
+        return tours;
+    }
 
     public String generateStrongETag() throws NoSuchAlgorithmException, IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -60,6 +68,12 @@ public class TourService {
     }
 
     public void updateLastModified() {
-        this.lastModified = System.currentTimeMillis();
+        this.lastModified = Instant.now().truncatedTo(ChronoUnit.SECONDS).toEpochMilli();
+    }
+
+    public long convertDateStringToMillis(String dateString) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z");
+        Date d = format.parse(dateString);
+        return d.getTime();
     }
 }
